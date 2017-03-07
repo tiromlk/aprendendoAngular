@@ -1,0 +1,29 @@
+<div class="jumbotron">
+	<form name="contatoForm">
+		<input class="form-control" type="text" data-ng-model="contato.nome" name="txtNome" placeholder="Nome" data-ng-required="true" data-ng-minlength="10"/>
+		<input class="form-control" type="text" data-ng-model="contato.telefone" name="txtTel" placeholder="Telefone" data-ng-required="true" data-ng-pattern="/^\d{4,5}-\d{4}$/"/>
+		<input class="form-control" type="text" data-ng-model="contato.data" name="txtData" placeholder="Data" ui-date/>
+		<select class="form-control" data-ng-model="contato.operadora" name="comboOper" data-ng-options="operadora.nome + '(' + (operadora.preco | currency) +')' for operadora in operadoras | orderBy:'nome'" data-ng-required="true">
+			<option value=""> selecione uma operadora</option>	
+		</select>
+	</form>
+	<div data-ng-show="contatoForm.txtNome.$dirty" data-ng-messages="contatoForm.txtNome.$error" >
+	
+		<div data-ng-message="required" class="alert alert-danger">
+			Por favor, preencha o nome.		
+		</div>
+		<div data-ng-message="minlength" class="alert alert-danger">
+			O campo nome deve ter 10 caracteres ao menos.		
+		</div>
+	</div>
+	<div class="alert alert-danger" data-ng-show="contatoForm.txtTel.$error.required && contatoForm.txtTel.$dirty">
+		Por favor, preencha o telefone.		
+	</div>
+	<div class="alert alert-danger" data-ng-show="contatoForm.txtTel.$error.pattern">
+		O campo telefone deve ter o formato 99999-9999.		
+	</div>
+	<div class="alert alert-danger" data-ng-show="contatoForm.comboOper.$invalid && contatoForm.comboOper.$dirty">
+		Por favor, preencha a operadora.		
+	</div>
+	<button class="btn btn-primary btn-block" data-ng-click="adicionarContato(contato)" data-ng-disabled="contatoForm.$invalid">Adicionar</button>
+</div>
